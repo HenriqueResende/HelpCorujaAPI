@@ -15,6 +15,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseCors(option => option.AllowAnyOrigin());
+
 app.UseAuthorization();
 
 app.MapControllers();
