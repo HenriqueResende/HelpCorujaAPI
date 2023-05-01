@@ -57,5 +57,48 @@ namespace HelpCorujaAPI.Controllers
 
             return JsonConvert.SerializeObject(retorno);
         }
+
+        [HttpPost]
+        [Route("setAula")]
+        public string setAula(int codigoTutor, string materia, DateTime dataInicio, DateTime dataFim)
+        {
+            var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
+
+            var dt = new DataTable();
+
+            using (var adapter = new SqlDataAdapter("InserirAula", connection))
+            {
+                adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapter.SelectCommand.Parameters.Add("@CodigoTutor", SqlDbType.Int).Value = codigoTutor;
+                adapter.SelectCommand.Parameters.Add("@Materia", SqlDbType.VarChar).Value = materia;
+                adapter.SelectCommand.Parameters.Add("@DataInicio", SqlDbType.DateTime).Value = dataInicio;
+                adapter.SelectCommand.Parameters.Add("@DataFim", SqlDbType.DateTime).Value = dataFim;
+
+                adapter.Fill(dt);
+            };
+
+            return JsonConvert.SerializeObject(true);
+        }
+
+        [HttpDelete]
+        [Route("deleteAula")]
+        public string deleteAula(int codigoAula)
+        {
+            var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
+
+            var dt = new DataTable();
+
+            using (var adapter = new SqlDataAdapter("DeletarAula", connection))
+            {
+                adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                adapter.SelectCommand.Parameters.Add("@CodigoAula", SqlDbType.Int).Value = codigoAula;
+
+                adapter.Fill(dt);
+            };
+
+            return JsonConvert.SerializeObject(true);
+        }
     }
 }
