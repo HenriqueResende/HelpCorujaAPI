@@ -26,7 +26,7 @@ namespace HelpCorujaAPI.Controllers
 
             var dt = new DataTable();
 
-            var adapter = new SqlDataAdapter("SELECT DISTINCT Materia FROM Aula", connection);
+            var adapter = new SqlDataAdapter("SELECT DISTINCT Materia FROM Aula WHERE CodigoUsuario IS NULL ORDER BY Materia ASC", connection);
 
             adapter.Fill(dt);
 
