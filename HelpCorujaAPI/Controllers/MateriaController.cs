@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,6 +19,7 @@ namespace HelpCorujaAPI.Controllers
 
         [HttpGet]
         [Route("getMateria")]
+        [Authorize]
         public string getMateria()
         {
             var retorno = new List<string>();

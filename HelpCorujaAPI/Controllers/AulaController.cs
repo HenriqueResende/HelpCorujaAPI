@@ -1,4 +1,5 @@
 ﻿using HelpCorujaAPI.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Data;
@@ -19,6 +20,7 @@ namespace HelpCorujaAPI.Controllers
 
         [HttpGet]
         [Route("getAula")]
+        [Authorize]
         public string getAula(string? materia, int? semestre, DateTime? data)
         {
             var retorno = new List<Aula>();
@@ -60,6 +62,7 @@ namespace HelpCorujaAPI.Controllers
 
         [HttpPost]
         [Route("setAula")]
+        [Authorize]
         public string setAula(int codigoTutor, string materia, DateTime dataInicio, DateTime dataFim)
         {
             var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
@@ -83,6 +86,7 @@ namespace HelpCorujaAPI.Controllers
 
         [HttpDelete]
         [Route("deleteAula")]
+        [Authorize]
         public string deleteAula(int codigoAula)
         {
             var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
