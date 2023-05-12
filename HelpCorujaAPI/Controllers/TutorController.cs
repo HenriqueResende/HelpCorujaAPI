@@ -1,7 +1,6 @@
 ﻿using HelpCorujaAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -18,28 +17,37 @@ namespace HelpCorujaAPI.Controllers
             _configuration = configuration;
         }
 
+        #region setTutor
         [HttpPost]
         [Route("setTutor")]
         [Authorize]
-        public string setTutor(Tutor tutor)
+        public IActionResult setTutor(Tutor tutor)
         {
-            var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
-
-            var dt = new DataTable();
-
-            using (var adapter = new SqlDataAdapter("InserirTutor", connection))
+            try
             {
-                adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
 
-                adapter.SelectCommand.Parameters.Add("@RA", SqlDbType.VarChar).Value = tutor.RA;
-                adapter.SelectCommand.Parameters.Add("@CodigoCurso", SqlDbType.Int).Value = tutor.CodigoCurso;
-                adapter.SelectCommand.Parameters.Add("@Semestre", SqlDbType.Int).Value = tutor.Semestre;
-                adapter.SelectCommand.Parameters.Add("@Contato", SqlDbType.VarChar).Value = tutor.Contato;
+                var dt = new DataTable();
 
-                adapter.Fill(dt);
-            };
+                using (var adapter = new SqlDataAdapter("InserirTutor", connection))
+                {
+                    adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-            return JsonConvert.SerializeObject(true);
+                    adapter.SelectCommand.Parameters.Add("@RA", SqlDbType.VarChar).Value = tutor.RA;
+                    adapter.SelectCommand.Parameters.Add("@CodigoCurso", SqlDbType.Int).Value = tutor.CodigoCurso;
+                    adapter.SelectCommand.Parameters.Add("@Semestre", SqlDbType.Int).Value = tutor.Semestre;
+                    adapter.SelectCommand.Parameters.Add("@Contato", SqlDbType.VarChar).Value = tutor.Contato;
+
+                    adapter.Fill(dt);
+                };
+
+                return Ok(new { Status = 200, Mensagem = "Tutor cadastrado com sucesso." });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { Status = 500, Mensagem = "Algo deu errado, tente novamente mais tarde!" });
+            }
         }
+        #endregion
     }
 }

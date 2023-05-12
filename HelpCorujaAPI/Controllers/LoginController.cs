@@ -27,6 +27,7 @@ namespace HelpCorujaAPI.Controllers
             Interations = _configuration.GetValue<int>("Iterations");
         }
 
+        #region Login
         [HttpPost]
         [Route("login")]
         public IActionResult Login(Login login)
@@ -36,10 +37,10 @@ namespace HelpCorujaAPI.Controllers
                 var usuario = new Usuario();
 
                 if (login.RA.IsNullOrEmpty())
-                    return BadRequest("Informe o RA.");
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o RA." });
 
                 else if (login.Senha.IsNullOrEmpty())
-                    return BadRequest("Informe a Senha.");
+                    return BadRequest(new { Status = 400, Mensagem = "Informe a Senha." });
 
                 #region busca o usuário no banco
                 var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
@@ -67,8 +68,8 @@ namespace HelpCorujaAPI.Controllers
                 }
                 #endregion
 
-                if(usuario?.Codigo == null || usuario.Codigo == 0)
-                    return BadRequest("Usuário não cadastrado.");
+                if (usuario?.Codigo == null || usuario.Codigo == 0)
+                    return BadRequest(new { Status = 400, Mensagem = "Usuário não cadastrado." });
 
                 if (Check(usuario.Senha, login.Senha))
                 {
@@ -88,17 +89,19 @@ namespace HelpCorujaAPI.Controllers
 
                     var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                    return Ok(new { Token = tokenHandler.WriteToken(token) });
+                    return Ok(new { Status = 200, Token = tokenHandler.WriteToken(token) });
                 }
                 else
-                    return Unauthorized();
+                    return Unauthorized(new { Status = 401, Mensagem = "Login ou senha inválidos." });
             }
             catch
             {
-                return BadRequest("Ocorreu um erro ao gerar o token.");
+                return BadRequest(new { Status = 500, Mensagem = "Algo deu errado, tente novamente mais tarde!" });
             }
         }
+        #endregion
 
+        #region Cadastro
         [HttpPost]
         [Route("cadastro")]
         public IActionResult Cadastro(Usuario usuario)
@@ -106,13 +109,13 @@ namespace HelpCorujaAPI.Controllers
             try
             {
                 if (usuario.RA.IsNullOrEmpty())
-                    return BadRequest("Informe o RA.");
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o RA." });
 
                 else if (usuario.Nome.IsNullOrEmpty())
-                    return BadRequest("Informe o Nome.");
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o Nome." });
 
                 else if (usuario.Senha.IsNullOrEmpty())
-                    return BadRequest("Informe a Senha.");
+                    return BadRequest(new { Status = 400, Mensagem = "Informe a Senha." });
 
                 usuario.Senha = Hash(usuario.Senha);
 
@@ -133,13 +136,14 @@ namespace HelpCorujaAPI.Controllers
                 };
                 #endregion
 
-                return Ok(true);
+                return Ok(new { Status = 200, Mensagem = "Usuário cadastrado com sucesso." });
             }
             catch
             {
-                return BadRequest("Ocorreu um erro ao gerar o token.");
+                return BadRequest(new { Status = 500, Mensagem = "Algo deu errado, tente novamente mais tarde!" });
             }
         }
+        #endregion
 
         #region Métodos de criptografia
         private string Hash(string password)
