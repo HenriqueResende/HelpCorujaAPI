@@ -32,7 +32,7 @@ namespace HelpCorujaAPI.Controllers
 
                 var dt = new DataTable();
 
-                using (var adapter = new SqlDataAdapter("ListaRAulas", connection))
+                using (var adapter = new SqlDataAdapter("ListarAulas", connection))
                 {
                     adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
