@@ -1,6 +1,7 @@
 ﻿using HelpCorujaAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
@@ -26,6 +27,18 @@ namespace HelpCorujaAPI.Controllers
         {
             try
             {
+                if (tutor.RA.IsNullOrEmpty())
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o RA." });
+
+                else if (!tutor.CodigoCurso.HasValue)
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o curso." });
+
+                else if (!tutor.Semestre.HasValue)
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o semestre." });
+
+                else if (tutor.Contato.IsNullOrEmpty())
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o contato." });
+
                 var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
 
                 var dt = new DataTable();

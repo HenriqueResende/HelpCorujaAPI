@@ -1,6 +1,7 @@
 ﻿using HelpCorujaAPI.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
@@ -124,10 +125,22 @@ namespace HelpCorujaAPI.Controllers
         [HttpPost]
         [Route("setAula")]
         [Authorize]
-        public IActionResult setAula(string ra, string materia, DateTime dataInicio, DateTime dataFim)
+        public IActionResult setAula(string? ra, string? materia, DateTime? dataInicio, DateTime? dataFim)
         {
             try
             {
+                if (ra.IsNullOrEmpty())
+                    return BadRequest(new { Status = 400, Mensagem = "Informe o RA." });
+
+                else if (materia.IsNullOrEmpty())
+                    return BadRequest(new { Status = 400, Mensagem = "Informe a matéria." });
+
+                else if (!dataInicio.HasValue)
+                    return BadRequest(new { Status = 400, Mensagem = "Informe a data de início." });
+
+                else if (!dataFim.HasValue)
+                    return BadRequest(new { Status = 400, Mensagem = "Informe a data de fim." });
+
                 var connection = new SqlConnection(_configuration.GetConnectionString("HelpCorujaAppCon").ToString());
 
                 var dt = new DataTable();
