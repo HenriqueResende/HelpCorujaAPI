@@ -1,6 +1,6 @@
-﻿namespace HelpCorujaAPI.Models
+﻿namespace HelpCorujaAPI.Model
 {
-    public class Curso
+    public class Materia
     {
         public int Codigo { get; set; }
 

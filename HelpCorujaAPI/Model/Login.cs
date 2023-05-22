@@ -1,4 +1,4 @@
-﻿namespace HelpCorujaAPI.Models
+﻿namespace HelpCorujaAPI.Model
 {
     public class Login
     {

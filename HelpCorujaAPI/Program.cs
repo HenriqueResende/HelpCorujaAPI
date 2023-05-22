@@ -1,3 +1,6 @@
+using HelpCorujaAPI.BusinessLayer;
+using HelpCorujaAPI.DataLayer;
+using HelpCorujaAPI.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -65,6 +68,7 @@ builder.Services.AddAuthentication(x =>
 
 #endregion
 
+#region CorsPolicy
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("CorsPolicy", builder => builder
@@ -72,6 +76,17 @@ builder.Services.AddCors(option =>
     .AllowAnyMethod()
     .AllowAnyHeader());
 });
+#endregion
+
+#region AddScoped
+builder.Services.AddScoped<ICRUD, CRUD>();
+builder.Services.AddScoped<IBLAula, BLAula>();
+builder.Services.AddScoped<IBLCriptografia, BLCriptografia>();
+builder.Services.AddScoped<IBLCurso, BLCurso>();
+builder.Services.AddScoped<IBLLogin, BLLogin>();
+builder.Services.AddScoped<IBLMateria, BLMateria>();
+builder.Services.AddScoped<IBLTutor, BLTutor>();
+#endregion
 
 var app = builder.Build();
 
