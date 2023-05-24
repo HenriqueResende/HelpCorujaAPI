@@ -4,8 +4,8 @@ namespace HelpCorujaAPI.BusinessLayer
 {
     public interface IBLTutor
     {
-        public bool setTutor(Tutor tutor);
+        public bool setTutor(TutorDto tutor);
 
-        public Tutor getTutor(string ra);
+        public TutorDto getTutor(string ra);
     }
 }

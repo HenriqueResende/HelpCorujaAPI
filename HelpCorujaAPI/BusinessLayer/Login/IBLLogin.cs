@@ -4,8 +4,8 @@ namespace HelpCorujaAPI.BusinessLayer
 {
     public interface IBLLogin
     {
-        public string Login(Login login);
+        public string Login(LoginDto login);
 
-        public bool Cadastro(Usuario usuario);
+        public bool Cadastro(UsuarioDto usuario);
     }
 }

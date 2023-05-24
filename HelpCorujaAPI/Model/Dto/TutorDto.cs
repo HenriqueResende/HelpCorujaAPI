@@ -1,8 +1,10 @@
 ﻿namespace HelpCorujaAPI.Model
 {
-    public class Tutor : Usuario
+    public class TutorDto
     {
-        public Curso Curso { get; set; }
+        public string? RA { get; set; }
+
+        public int? CodigoCurso { get; set; }
 
         public int? Semestre { get; set; }
 

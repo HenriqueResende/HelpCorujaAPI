@@ -17,9 +17,9 @@ namespace HelpCorujaAPI.BusinessLayer
         /// getCurso
         /// </summary>
         /// <returns></returns>
-        public List<Curso> getCurso()
+        public List<CursoDto> getCurso()
         {
-            return _CRUD.ListQuery<Curso>("SELECT * FROM Curso ORDER BY Nome ASC");
+            return _CRUD.ListQuery<CursoDto>("SELECT * FROM Curso ORDER BY Nome ASC");
         }
         #endregion
     }

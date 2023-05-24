@@ -25,7 +25,7 @@ namespace HelpCorujaAPI.BusinessLayer
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public string Login(Login login)
+        public string Login(LoginDto login)
         {
             if (login.RA.IsNullOrEmpty())
                 throw new FormatException("Informe o RA.");
@@ -38,7 +38,7 @@ namespace HelpCorujaAPI.BusinessLayer
                 new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = login.RA }
             };
 
-            var usuario = _CRUD.ListProc<Usuario>("ObterUsuario", param).FirstOrDefault();
+            var usuario = _CRUD.ListProc<UsuarioDto>("ObterUsuario", param).FirstOrDefault();
 
             if (usuario == null || usuario?.Codigo == null || usuario.Codigo == 0)
                 throw new FormatException("Usuário não cadastrado.");
@@ -58,24 +58,17 @@ namespace HelpCorujaAPI.BusinessLayer
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns></returns>
-        public bool Cadastro(Usuario usuario)
+        public bool Cadastro(UsuarioDto usuario)
         {
-            if (usuario.RA.IsNullOrEmpty())
-                throw new FormatException("Informe o RA.");
-
-            else if (usuario.Nome.IsNullOrEmpty())
-                throw new FormatException("Informe o Nome.");
-
-            else if (usuario.Senha.IsNullOrEmpty())
-                throw new FormatException("Informe a Senha.");
+            var user = new Usuario(usuario.Nome, usuario.RA, usuario.Senha);
 
             usuario.Senha = _criptografia.Hash(usuario.Senha);
 
             var param = new List<Param>
             {
-                new Param { sqlParameter = new SqlParameter("@Nome", SqlDbType.VarChar), value = usuario.Nome },
-                new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = usuario.RA },
-                new Param { sqlParameter = new SqlParameter("@Senha", SqlDbType.VarChar), value = usuario.Senha }
+                new Param { sqlParameter = new SqlParameter("@Nome", SqlDbType.VarChar), value = user.Nome.getNome() },
+                new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = user.RA.getRA() },
+                new Param { sqlParameter = new SqlParameter("@Senha", SqlDbType.VarChar), value = user.Senha.getSenha() }
             };
 
             _CRUD.ExecProc("InserirUsuario", param);

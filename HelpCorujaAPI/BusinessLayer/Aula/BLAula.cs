@@ -23,7 +23,7 @@ namespace HelpCorujaAPI.BusinessLayer
         /// <param name="semestre"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public List<Aula> getAula(string? materia, int? semestre, DateTime? data)
+        public List<AulaDto> getAula(string? materia, int? semestre, DateTime? data)
         {
             var param = new List<Param>
             {
@@ -32,7 +32,7 @@ namespace HelpCorujaAPI.BusinessLayer
                 new Param { sqlParameter = new SqlParameter("@Data", SqlDbType.DateTime), value = data }
             };
 
-            return _CRUD.ListProc<Aula>("ListarAulas", param);
+            return _CRUD.ListProc<AulaDto>("ListarAulas", param);
         }
         #endregion
 
@@ -42,14 +42,14 @@ namespace HelpCorujaAPI.BusinessLayer
         /// </summary>
         /// <param name="ra"></param>
         /// <returns></returns>
-        public List<Aula> getAulaTutor(string ra)
+        public List<AulaDto> getAulaTutor(string ra)
         {
             var param = new List<Param>
             {
                 new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = ra }
             };
 
-            return _CRUD.ListProc<Aula>("ListarAulasTutor", param);
+            return _CRUD.ListProc<AulaDto>("ListarAulasTutor", param);
         }
         #endregion
 

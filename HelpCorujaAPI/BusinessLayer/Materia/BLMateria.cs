@@ -19,7 +19,7 @@ namespace HelpCorujaAPI.BusinessLayer
         /// <returns></returns>
         public List<string> getMateria()
         {
-            return _CRUD.ListQuery<Materia>("SELECT DISTINCT Materia AS Nome FROM Aula WHERE CodigoUsuario IS NULL ORDER BY Materia ASC").Select(x => x.Nome).ToList();
+            return _CRUD.ListQuery<MateriaDto>("SELECT DISTINCT Materia AS Nome FROM Aula WHERE CodigoUsuario IS NULL ORDER BY Materia ASC").Select(x => x.Nome).ToList();
         }
         #endregion
     }

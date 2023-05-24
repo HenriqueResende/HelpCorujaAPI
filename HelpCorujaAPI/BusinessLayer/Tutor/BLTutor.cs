@@ -21,7 +21,7 @@ namespace HelpCorujaAPI.BusinessLayer
         /// </summary>
         /// <param name="tutor"></param>
         /// <returns></returns>
-        public bool setTutor(Tutor tutor)
+        public bool setTutor(TutorDto tutor)
         {
             if (tutor.RA.IsNullOrEmpty())
                 throw new FormatException("Informe o RA.");
@@ -53,14 +53,14 @@ namespace HelpCorujaAPI.BusinessLayer
         /// </summary>
         /// <param name="ra"></param>
         /// <returns></returns>
-        public Tutor getTutor(string ra)
+        public TutorDto getTutor(string ra)
         {
             var param = new List<Param>
             {
                 new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = ra }
             };
 
-            return _CRUD.ListProc<Tutor>("GetTutor", param).FirstOrDefault(new Tutor());
+            return _CRUD.ListProc<TutorDto>("GetTutor", param).FirstOrDefault(new TutorDto());
         }
         #endregion
     }

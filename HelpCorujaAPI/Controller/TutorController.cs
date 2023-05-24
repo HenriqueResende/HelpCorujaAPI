@@ -21,7 +21,7 @@ namespace HelpCorujaAPI.Controllers
         [HttpPost]
         [Route("setTutor")]
         [Authorize]
-        public IActionResult setTutor(Tutor tutor)
+        public IActionResult setTutor(TutorDto tutor)
         {
             try
             {

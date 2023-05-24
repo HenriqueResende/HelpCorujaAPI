@@ -4,6 +4,6 @@ namespace HelpCorujaAPI.BusinessLayer
 {
     public interface IBLCurso
     {
-        public List<Curso> getCurso();
+        public List<CursoDto> getCurso();
     }
 }

@@ -19,7 +19,7 @@ namespace HelpCorujaAPI.Controllers
         #region Login
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(Login login)
+        public IActionResult Login(LoginDto login)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace HelpCorujaAPI.Controllers
         #region Cadastro
         [HttpPost]
         [Route("cadastro")]
-        public IActionResult Cadastro(Usuario usuario)
+        public IActionResult Cadastro(UsuarioDto usuario)
         {
             try
             {
