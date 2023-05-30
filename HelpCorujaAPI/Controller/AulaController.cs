@@ -1,4 +1,5 @@
 ﻿using HelpCorujaAPI.BusinessLayer;
+using HelpCorujaAPI.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -67,11 +68,11 @@ namespace HelpCorujaAPI.Controllers
         [HttpPost]
         [Route("setAula")]
         [Authorize]
-        public IActionResult setAula(string? ra, string? materia, DateTime? dataInicio, DateTime? dataFim)
+        public IActionResult setAula(AulaSetDto aula)
         {
             try
             {
-                if(_Aula.setAula(ra, materia, dataInicio, dataFim))
+                if(_Aula.setAula(aula))
                     return Ok(new { Status = 200, Mensagem = "Aula cadastrada com sucesso." });
 
                 else

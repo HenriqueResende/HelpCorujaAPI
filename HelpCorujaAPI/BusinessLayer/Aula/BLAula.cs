@@ -62,26 +62,26 @@ namespace HelpCorujaAPI.BusinessLayer
         /// <param name="dataInicio"></param>
         /// <param name="dataFim"></param>
         /// <returns></returns>
-        public bool setAula(string? ra, string? materia, DateTime? dataInicio, DateTime? dataFim)
+        public bool setAula(AulaSetDto aula)
         {
-            if (ra.IsNullOrEmpty())
+            if (aula.RA.IsNullOrEmpty())
                 throw new FormatException("Informe o RA.");
 
-            else if (materia.IsNullOrEmpty())
+            else if (aula.Materia.IsNullOrEmpty())
                 throw new FormatException("Informe a matéria.");
 
-            else if (!dataInicio.HasValue)
+            else if (!aula.DataInicio.HasValue)
                 throw new FormatException("Informe a data de início.");
 
-            else if (!dataFim.HasValue)
+            else if (!aula.DataFim.HasValue)
                 throw new FormatException("Informe a data de fim.");
 
             var param = new List<Param>
             {
-                new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = ra },
-                new Param { sqlParameter = new SqlParameter("@Materia", SqlDbType.VarChar), value = materia },
-                new Param { sqlParameter = new SqlParameter("@DataInicio", SqlDbType.DateTime), value = dataInicio },
-                new Param { sqlParameter = new SqlParameter("@DataFim", SqlDbType.DateTime), value = dataFim }
+                new Param { sqlParameter = new SqlParameter("@RA", SqlDbType.VarChar), value = aula.RA },
+                new Param { sqlParameter = new SqlParameter("@Materia", SqlDbType.VarChar), value = aula.Materia },
+                new Param { sqlParameter = new SqlParameter("@DataInicio", SqlDbType.DateTime), value = aula.DataInicio },
+                new Param { sqlParameter = new SqlParameter("@DataFim", SqlDbType.DateTime), value = aula.DataFim }
             };
 
             return _CRUD.ExecProc("InserirAula", param);

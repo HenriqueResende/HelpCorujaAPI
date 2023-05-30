@@ -8,7 +8,7 @@ namespace HelpCorujaAPI.BusinessLayer
 
         public List<AulaDto> getAulaTutor(string ra);
 
-        public bool setAula(string? ra, string? materia, DateTime? dataInicio, DateTime? dataFim);
+        public bool setAula(AulaSetDto aula);
 
         public bool deleteAula(int codigoAula);
     }
