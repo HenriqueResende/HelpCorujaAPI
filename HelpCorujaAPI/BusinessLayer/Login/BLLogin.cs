@@ -62,7 +62,7 @@ namespace HelpCorujaAPI.BusinessLayer
         {
             var user = new Usuario(usuario.Nome, usuario.RA, usuario.Senha);
 
-            usuario.Senha = _criptografia.Hash(usuario.Senha);
+            user.Senha.setSenha(_criptografia.Hash(usuario.Senha));
 
             var param = new List<Param>
             {
